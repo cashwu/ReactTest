@@ -15,21 +15,28 @@
     <div id="container"></div>
     <script type="text/babel">
     
+        var IntervalMixin = function(interval){
+            return {
+                componentDidMount: function(){
+                    this._interval = setInterval(this.onTick, interval);
+                },
+                componentWillUnmount: function(){
+                    clearnInterval(this._interval);
+                }
+            }
+        };
+    
         var Timer = React.createClass({
         
+            mixins: [IntervalMixin(1000)],
+            
             getInitialState: function(){
                 return {
                     secondsElapsed : 0  
                 };
             },
-            tick: function(){
+            onTick: function(){
                 this.setState({secondsElapsed: this.state.secondsElapsed + 1});
-            },
-            componentDidMount: function(){
-                this.interval = setInterval(this.tick, 1000);
-            },
-            componentWillUnmount: function(){
-                clearInterval(this.interval);
             },
             render: function() {
                 return <div>Seconds Elapsed: {this.state.secondsElapsed}</div>;
