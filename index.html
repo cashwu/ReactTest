@@ -14,37 +14,27 @@
 
     <div id="container"></div>
     <script type="text/babel">
-    
-        var IntervalMixin = function(interval){
-            return {
-                componentDidMount: function(){
-                    this._interval = setInterval(this.onTick, interval);
-                },
-                componentWillUnmount: function(){
-                    clearnInterval(this._interval);
-                }
-            }
-        };
-    
-        var Timer = React.createClass({
-        
-            mixins: [IntervalMixin(1000)],
+        /*input 輸入資料後，按下 Button，Alert 輸入的資料*/
+        var MyForm = React.createClass({
+            submitHandler: function(event){
+                event.preventDefault();
             
-            getInitialState: function(){
-                return {
-                    secondsElapsed : 0  
-                };
+                var hellotTo = this.refs.hellotTo.value;
+                alert(hellotTo);
             },
-            onTick: function(){
-                this.setState({secondsElapsed: this.state.secondsElapsed + 1});
-            },
-            render: function() {
-                return <div>Seconds Elapsed: {this.state.secondsElapsed}</div>;
+            render: function(){
+                return(
+                    <form onSubmit={this.submitHandler}>
+                        <input ref="hellotTo" type="text" defaultValue="Hello World!" />
+                        <br/ >
+                        <button type="submit">Speak</button>
+                    </form>
+                );
             }
         });
-
+    
         ReactDOM.render(
-            <Timer />,
+            <MyForm />,
             document.getElementById('container')
         );
     </script>
