@@ -18,24 +18,39 @@
             
             getInitialState : function(){
                 return {
-                    hellotTo: "Hello World!"
+                    options: ["A"]
                 };
             },
-            handleChange: function(){
+            handleChange: function(event){
+                var checked = [];
+                var sel = event.target;
+                console.log(sel);
+                for(var i = 0; i < sel.length; i++){
+                    var option = sel.options[i];
+                    console.log(option);
+                    if(option.selected){
+                        checked.push(option.value);
+                    }
+                }
+                console.log(checked);
                 this.setState({
-                    hellotTo: event.target.value
+                    options : checked
                 });
             },
             
             submitHandler: function(event){
                 event.preventDefault();
             
-                alert(this.state.hellotTo);
+                alert(this.state.options);
             },
             render: function(){
                 return(
                     <form onSubmit={this.submitHandler}>
-                        <input ref="hellotTo" type="text" value={this.state.hellotTo} onChange={this.handleChange} />
+                        <select multiple="true" value={this.state.options} onChange={this.handleChange}>
+                            <option value="A">First Option</option>
+                            <option value="B">Second Option</option>
+                            <option value="C">First Option</option>
+                        </select>
                         <br/ >
                         <button type="submit">Speak</button>
                     </form>
