@@ -14,18 +14,28 @@
 
     <div id="container"></div>
     <script type="text/babel">
-        /*input 輸入資料後，按下 Button，Alert 輸入的資料*/
         var MyForm = React.createClass({
+            
+            getInitialState : function(){
+                return {
+                    hellotTo: "Hello World!"
+                };
+            },
+            handleChange: function(){
+                this.setState({
+                    hellotTo: event.target.value
+                });
+            },
+            
             submitHandler: function(event){
                 event.preventDefault();
             
-                var hellotTo = this.refs.hellotTo.value;
-                alert(hellotTo);
+                alert(this.state.hellotTo);
             },
             render: function(){
                 return(
                     <form onSubmit={this.submitHandler}>
-                        <input ref="hellotTo" type="text" defaultValue="Hello World!" />
+                        <input ref="hellotTo" type="text" value={this.state.hellotTo} onChange={this.handleChange} />
                         <br/ >
                         <button type="submit">Speak</button>
                     </form>
